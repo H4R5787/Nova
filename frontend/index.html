@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nova Programming Language Playground</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Header Bar -->
+  <header class="app-header">
+    <div class="brand-section">
+      <div class="logo-badge">
+        <span>🌌</span>
+        <span>NOVA</span>
+      </div>
+      <span class="version-pill">v1.0.0</span>
+    </div>
+
+    <div class="actions-section">
+      <select id="presetSelect" class="select-preset">
+        <option value="loop_scoping">Challenge: Loop Scoping & Closures</option>
+        <option value="fibonacci">Example: Fibonacci (Recursion)</option>
+        <option value="closures">Example: Lexical Closures & Currying</option>
+        <option value="immutability">Safety: Immutability Checking</option>
+      </select>
+
+      <button id="clearBtn" class="btn-clear">Clear Output</button>
+      <button id="runBtn" class="btn-run">
+        <span>▶</span>
+        <span>Run Code</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Work Area -->
+  <main class="app-container">
+    <!-- Left: Code Editor -->
+    <section class="editor-pane">
+      <div class="pane-header">
+        <span>Source Code (.nv)</span>
+        <span>Ctrl + Enter to Execute</span>
+      </div>
+      <div class="editor-wrapper">
+        <div id="lineNumbers" class="line-numbers">1</div>
+        <textarea id="codeEditor" class="code-textarea" spellcheck="false"></textarea>
+      </div>
+    </section>
+
+    <!-- Right: Multi-Tab Inspect Panel -->
+    <section class="inspect-pane">
+      <div class="tab-bar">
+        <button class="tab-button active" data-tab="tabConsole">Console Output</button>
+        <button class="tab-button" data-tab="tabAst">AST Explorer</button>
+        <button class="tab-button" data-tab="tabScope">Scope Inspector</button>
+      </div>
+
+      <!-- Tab 1: Terminal Console -->
+      <div id="tabConsole" class="tab-content active">
+        <div id="consoleOutput" class="console-output"></div>
+      </div>
+
+      <!-- Tab 2: AST Explorer -->
+      <div id="tabAst" class="tab-content">
+        <pre id="astOutput" class="ast-view"></pre>
+      </div>
+
+      <!-- Tab 3: Scope Inspector -->
+      <div id="tabScope" class="tab-content">
+        <div id="scopeOutput"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Bottom Status Bar -->
+  <footer class="app-footer">
+    <div class="status-item">
+      <div class="status-dot"></div>
+      <span>Nova Runtime: Ready</span>
+    </div>
+    <div class="status-item">
+      <span id="lineCount">0 lines</span>
+      <span>•</span>
+      <span>Execution Time: <strong id="execTime">0.00 ms</strong></span>
+    </div>
+  </footer>
+
+  <script src="nova_engine.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

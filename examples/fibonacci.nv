@@ -1,0 +1,36 @@
+// Fibonacci in Nova
+
+// Recursive implementation
+fn fib_rec(n) {
+    if (n <= 1) {
+        return n;
+    }
+    return fib_rec(n - 1) + fib_rec(n - 2);
+}
+
+// Iterative implementation with mutable loop bindings
+fn fib_iter(n) {
+    if (n <= 1) {
+        return n;
+    }
+    let mut a = 0;
+    let mut b = 1;
+    let mut i = 2;
+    while (i <= n) {
+        let next = a + b;
+        a = b;
+        b = next;
+        i = i + 1;
+    }
+    return b;
+}
+
+print("=== Recursive Fibonacci ===");
+print("fib_rec(0) =", fib_rec(0));
+print("fib_rec(1) =", fib_rec(1));
+print("fib_rec(7) =", fib_rec(7));
+print("fib_rec(10) =", fib_rec(10));
+
+print("=== Iterative Fibonacci ===");
+print("fib_iter(10) =", fib_iter(10));
+print("fib_iter(20) =", fib_iter(20));

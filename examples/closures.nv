@@ -1,0 +1,35 @@
+// Lexical Closures & Higher-Order Functions in Nova
+
+// Function that returns a closure with captured lexical state
+fn make_counter(start) {
+    let mut count = start;
+    return fn() {
+        count = count + 1;
+        return count;
+    };
+}
+
+print("=== Lexical Closures Demo ===");
+let c1 = make_counter(0);
+let c2 = make_counter(100);
+
+print("c1 first call:", c1()); // 1
+print("c1 second call:", c1()); // 2
+print("c1 third call:", c1()); // 3
+
+print("c2 first call:", c2()); // 101
+print("c2 second call:", c2()); // 102
+print("c1 fourth call:", c1()); // 4 (c1 and c2 are completely isolated!)
+
+// Function Currying & Combinators
+fn multiply_by(factor) {
+    return fn(n) {
+        return n * factor;
+    };
+}
+
+let triple = multiply_by(3);
+let quintuple = multiply_by(5);
+
+print("triple(10) =", triple(10)); // 30
+print("quintuple(10) =", quintuple(10)); // 50

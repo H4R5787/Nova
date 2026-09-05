@@ -1,0 +1,37 @@
+// Loop Scoping & Per-Iteration Frame Isolation Demo in Nova
+//
+// In flawed interpreters that reuse a single environment frame for loop iterations,
+// closures created inside a loop mistakenly share and overwrite the same variable binding.
+//
+// Nova guarantees per-iteration frame isolation: each iteration creates an isolated
+// scope frame, preserving the exact state captured at that iteration!
+
+print("=== Loop Scoping & Closure Capture ===");
+
+let mut closures = [];
+let mut i = 0;
+
+while (i < 4) {
+    let captured_i = i;
+    let closure = fn() {
+        return captured_i;
+    };
+    push(closures, closure);
+    i = i + 1;
+}
+
+print("Invoking closures captured during loop iterations:");
+let mut index = 0;
+while (index < len(closures)) {
+    let call_fn = closures[index];
+    print("Closure at index", index, "returns:", call_fn());
+    index = index + 1;
+}
+
+// Verification assertion:
+// If closures[0]() is 0, closures[1]() is 1, etc., loop scoping is correctly isolated!
+if (closures[0]() == 0 && closures[1]() == 1 && closures[2]() == 2 && closures[3]() == 3) {
+    print("SUCCESS: Per-iteration loop frame isolation verified!");
+} else {
+    print("FAILURE: Scope bleed detected across loop iterations!");
+}
