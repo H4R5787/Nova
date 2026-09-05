@@ -151,17 +151,17 @@ sequenceDiagram
     participant LoopEnv as Iteration Environment
     participant Closure as Function Object
 
-    Program->>Eval: while (i < 3) { let captured = i; ... }
-    loop Each Loop Cycle
-        Eval->>OuterEnv: Evaluate Condition (i < 3)
-        OuterEnv-->>Eval: True
-        Eval->>LoopEnv: Fork New Environment(parent=OuterEnv)
-        Eval->>LoopEnv: Define 'captured' = i
-        Eval->>Closure: Instantiate fn() { return captured; }
-        Closure->>LoopEnv: Retain Reference to Current Iteration Frame
-        Eval->>OuterEnv: Assign i = i + 1 (Bubbles to Parent Frame)
+    Program->>Eval: Execute while loop with closures
+    loop Each Loop Iteration
+        Eval->>OuterEnv: Evaluate condition (i < 3)
+        OuterEnv-->>Eval: Condition True
+        Eval->>LoopEnv: Fork new isolated Environment frame
+        Eval->>LoopEnv: Bind captured iteration value
+        Eval->>Closure: Instantiate closure referencing current frame
+        Closure->>LoopEnv: Retain pointer to current iteration frame
+        Eval->>OuterEnv: Reassign counter (mutates outer scope)
     end
-    Note over LoopEnv,Closure: Iteration frames remain isolated in memory;<br/>closures do not overwrite each other's state!
+    Note over LoopEnv,Closure: Iteration frames remain isolated in memory - closures preserve distinct state
 ```
 
 ---
